@@ -1,0 +1,101 @@
+a <- c(1, 2, 3)
+a[1]
+a[-3]
+a[2:3]
+a[c(T, F, T)]
+a[c(T, T, T)]
+a[c(F, F, F)]
+
+m <- matrix(c(1, 2, 3, 4, 5, 6), nrow=2, byrow=F);m
+m2 <- data.frame(m);m2
+m2[1, ]
+m2[, 1]
+m2[1, c(2, 3)]
+m2[c(T, F), c(F, T, T)]
+m2$X1
+
+colnames(m2) <- paste0("v", 1:3)
+#  v1 v2 v3
+#1  1  3  5
+#2  2  4  6
+
+#cbind/rbind (행/열 묶음)
+cbind(m2, m2)
+m3<-rbind(m2, m2, m2, m2) #크롤링에 활용도 높음
+m3[m3$v1 ==1, ] #첫번째 행의 값이 1인 열만 출력 
+m3[m3[,1] ==1, ] ;m3
+m3$v4 <- 1:8 ;m3
+m3$v5 <- 2:(nrow(m3)+1) ;m3
+
+ncol(m3)
+m3$v6 <- ifelse(m3$v1 %% 2 == 0, "even", "odd");m3
+
+str(m3) #structure
+#data의 상위/하위 6개
+head(m3)
+tail(m3)
+
+m2
+m4
+ m4 <- NULL
+for(i in 1:10){
+  m4 <- rbind(m4, m2) 
+  cat("\n", i) #"\n" = enter
+}
+
+m4
+dim(m4)
+
+#install.packages("stringr")
+library(stringr)
+
+m3[1, 6] <- "odd123";m3
+m3[str_detect(m3$v6, "odd"),]
+
+m3[m3$v6 %in% "odd", ]
+
+setwd("/Users/adrua/Desktop/Crawling_R")
+getwd()  
+
+write.csv(m3, "m3.csv", row.names=F) #row.names=F: 행 이름 저장X
+m4 <- read.csv("m3.csv")
+m4
+
+setwd("/Users/adrua/Desktop/Crawling_R")
+file_list <- list.files()
+
+library(stringr)
+folder_index <-str_detect(file_list, "R") | str_detect(file_list, "csv") #R or csv 가 들어간 파일명
+folder_list <- file_list[!folder_index] #(위) 가 아닌 것 
+
+folder_list
+i <- 1
+final_data <- NULL
+
+for(i in 1:length(folder_list)){
+  
+  folder_list[i]
+  setwd(paste0("/Users/adrua/Desktop/Crawling_R/",folder_list[i]))
+  getwd()
+  file_list <- list.files()
+  
+  j <- 2
+  for(j in 1:length(file_list)){
+    data <- read.csv(file_list[j])
+    final_data <- rbind(final_data, data)
+    cat("\n", i, "-", j)
+  }
+}
+
+head(final_data)
+dim(final_data)
+str(final_data)
+
+setwd("/Users/adrua/Desktop/Crawling_R/")
+
+data <- read.csv("m3.csv")
+head(data)
+data$v7 <- 1:nrow(data)
+write.csv(data, "data.csv", row.names = F)
+
+
