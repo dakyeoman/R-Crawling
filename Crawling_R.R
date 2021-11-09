@@ -91,11 +91,68 @@ head(final_data)
 dim(final_data)
 str(final_data)
 
-setwd("/Users/adrua/Desktop/Crawling_R/")
+
+
+#roof2
+setwd("/Users/adrua/Desktop/R-Crawling/")
 
 data <- read.csv("m3.csv")
 head(data)
 data$v7 <- 1:nrow(data)
 write.csv(data, "data.csv", row.names = F)
+
+getwd()
+file_list <- list.files()
+file_list[-c(1,2)]
+
+folder_index <-str_detect(file_list, "R") | str_detect(file_list, "csv") #R or csv 가 들어간 파일명
+folder_list <- file_list[!folder_index] #(위) 가 아닌 것 
+folder_list
+
+i <- 1
+final_data1 <- NULL
+final_data2 <- NULL
+
+for(i in 1:length(folder_list)){
+ 
+  folder_list[i]
+  setwd(paste0("/Users/adrua/Desktop/R-Crawling/",folder_list[i]))
+  getwd()
+  file_list <- list.files()
+  
+  j <- 2
+  for(j in 1:length(file_list)){
+   
+     data <- read.csv(file_list[j])
+    if(ncol(data)==6){
+      final_data1 <- rbind(final_data1, data)
+      #col수가 6개면 final data로 rbind 시킴. 
+    }else{
+      final_data2 <- rbind(final_data2, data)
+    }
+    cat("\n", i, "-", j)  
+  }
+}
+
+dim(final_data1)
+dim(final_data2)
+
+
+#------------------
+#list 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
