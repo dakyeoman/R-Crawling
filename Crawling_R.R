@@ -205,7 +205,9 @@ for(i in 1: length(aa)){
 
 library(stringr)
 ##클리앙 크롤링
-url <- "https://www.clien.net/service/board/park?&od=T31&category=0&po=0"
+i <- 1
+for(i in 1:10){
+url <- paste0("https://www.clien.net/service/board/park?&od=T31&category=0&po=0", i= -1)
 b <- readLines(url, encoding = "UTF-8") ##or EUC-KR
 length(b)
 head(b, 30)
@@ -224,7 +226,9 @@ title <- str_extract(b2, "(?<=title=\").*(?=\">)")
 b3<- b[str_detect(b, "<span class=\"hit\">")];b3
 b4 <- str_split(b3, "hit\">");b4
 ##way1
-hit <- str_extract(b3, "(?<=\">).*(?=</span>)")
+
+for(i in 1:10){
+hit <- str_extract(b3, "(?<=\">).*(?=</span>)")[-1]
 #sapply(b4, function(x){x[1]}) #함수 바로 작성 가능 
 
 ##way2
@@ -239,7 +243,13 @@ hit <- str_extract(b3, "(?<=\">).*(?=</span>)")
 b5 <- b[which(str_detect(b, "subject_fixed")) -2] 
 #which: TRUE값이 있는 index만 추출
 #-2 : 소스코드에서 제목 두 줄 앞 
-str_sub(str_extract(b5, "(?<=href=\").*(?=\">)")), end = -4)
 
+b6 <- str_sub(str_extract(b5, "(?<=href=\").*(?=data-role)"), end = -4)
+url <- paste0("https://www.clien.net", b6)
 
+data <- cbind(title, hit, url) 
+
+}
+
+head(data)
 
