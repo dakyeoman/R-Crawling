@@ -138,21 +138,86 @@ dim(final_data1)
 dim(final_data2)
 
 
-#------------------
-#list 
+#list------------------
+juso<-c("서울시 강북구 변1동", "전라남도 순천시 석현동", "경기도 평택시 지산동");juso
+
+library(stringr)
+
+#리스트 벡터에 접근해보자
+aa <- str_split(juso, " ")
+seoul <- aa[[1]] #aa 첫번째 큰 방의 벡터 접근
+length(seoul)
+aa[[2]]
+seoul[2]
+seoul[-2]
+aa[[1]][2]
+
+names(aa) <- c("서울", "전남", "경기")
+aa$서울
+
+#리스트 해체 
+aa_unlist <- unlist(aa);aa_unlist
+length(aa_unlist)
+
+#APPLYL 계열 함수 : apply, sapply, lapply, tapply
+apply(data[,-6], 1, sum) # = 행(1)별로 함수(sum)를 적용하겠다
+apply(data[,-6], 1, mean)
+apply(data[,-6], 2, sum) # = 열(2)별로 함수를 적용하겠다
+apply(data[,-6], 2, sum)
+
+data
+
+#각 요소에 대해 함수 적용 
+#tapply(적용하려는 칼럼(numeric), 구분하고 싶은 facter값이 있는 칼럼, 적용할 함수)
+#v6가even/odd인 것들에 대해 v3의 합계
+tapply(data$v3, data$v6, sum) 
+
+
+#sapply:각각의 큰 방의 벡터에 대해 함수 적용
+aa
+sapply(aa, length)
+first <- function(x){
+  x[1] #first(x)에서 데이터 x의 첫번째 작은 방 출력
+}
+
+first(aa[[3]]) 
+sapply(aa, first)
 
 
 
+#lapply: sapply에서 리스트 형태 그대로 출력
+lapply(aa, first)
+
+index <- function(x, i) { 
+  x[i] #i번째 방 출력 
+  }
+index(aa[[1]], 2)
+sapply(aa, index, 3)
+
+#apply없이 반복문으로 코딩하면 (시간이 굉장히 오래 걸림)
+dd <- c() #빈 벡터 선언
+
+for(i in 1: length(aa)){ 
+  dd <- c(aa[[i]][1])
+  cat("\n", i)
+  }
 
 
+library(stringr)
+##클리앙 크롤링
+url <- "https://www.clien.net/service/board/park?&od=T31&category=0&po=0"
+b <- readLines(url, encoding = "UTF-8") ##or EUC-KR
+length(b)
+head(b, 30)
+tail(b)
 
+#규칙을 찾아서 / 문구나 단어를 포함한
+#제목 추출
+b2<- b[str_detect(b, "subject_fixed")]
+str_extract(b2, ("(?<=\\").*(?=\">")") 
+str_extract(b2, ("(?<=\">).*(?=</span>)")) 
 
-
-
-
-
-
-
-
+#정규표현식 : 규칙에 맞는 것만 추출
+# ">로 시작해서 </span>으로 끝나는 것들의 가운데를 뽑는다
 
 
