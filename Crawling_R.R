@@ -211,13 +211,35 @@ length(b)
 head(b, 30)
 tail(b)
 
-#규칙을 찾아서 / 문구나 단어를 포함한
+#str_extract(b2, "(?<=abc").*(?=ijk)")##abc와 ijk 사이에 있는 텍스트 추출 
+#str_extract(data, "(?<=abc).*(?=)")##앞에 abc가 있는 것 추출
+#str_extract(data, "(?<=).*(?=i)")##뒤에 i가 있는 것 추출
+
 #제목 추출
 b2<- b[str_detect(b, "subject_fixed")]
-str_extract(b2, ("(?<=\\").*(?=\">")") 
-str_extract(b2, ("(?<=\">).*(?=</span>)")) 
+title <- str_extract(b2, "(?<=title=\").*(?=\">)")
 
-#정규표현식 : 규칙에 맞는 것만 추출
-# ">로 시작해서 </span>으로 끝나는 것들의 가운데를 뽑는다
+
+#조회수 추출 
+b3<- b[str_detect(b, "<span class=\"hit\">")];b3
+b4 <- str_split(b3, "hit\">");b4
+##way1
+hit <- str_extract(b3, "(?<=\">).*(?=</span>)")
+#sapply(b4, function(x){x[1]}) #함수 바로 작성 가능 
+
+##way2
+#ff<- function(x) {
+#   x[2]
+# }
+# sapply(b4, ff)
+# str_sub(sapply(b4, ff), end= -8) #end= -8: 뒤에서 글자 8개를 삭제 *변동 
+
+
+##url 추출
+b5 <- b[which(str_detect(b, "subject_fixed")) -2] 
+#which: TRUE값이 있는 index만 추출
+#-2 : 소스코드에서 제목 두 줄 앞 
+str_sub(str_extract(b5, "(?<=href=\").*(?=\">)")), end = -4)
+
 
 
