@@ -54,14 +54,14 @@ m3[str_detect(m3$v6, "odd"),]
 
 m3[m3$v6 %in% "odd", ]
 
-setwd("/Users/adrua/Desktop/Crawling_R")
+setwd("/Users/adrua/Desktop/R-Crawling_new/R-Crawling/")
 getwd()  
 
 write.csv(m3, "m3.csv", row.names=F) #row.names=F: 행 이름 저장X
 m4 <- read.csv("m3.csv")
 m4
 
-setwd("/Users/adrua/Desktop/Crawling_R")
+setwd("/Users/adrua/Desktop/R-Crawling_new/R-Crawling/")
 file_list <- list.files()
 
 library(stringr)
@@ -75,7 +75,7 @@ final_data <- NULL
 for(i in 1:length(folder_list)){
   
   folder_list[i]
-  setwd(paste0("/Users/adrua/Desktop/Crawling_R/",folder_list[i]))
+  setwd(paste0("/Users/adrua/Desktop/R-Crawling_new/R-Crawling/",folder_list[i]))
   getwd()
   file_list <- list.files()
   
@@ -94,7 +94,7 @@ str(final_data)
 
 
 #roof2
-setwd("/Users/adrua/Desktop/R-Crawling/")
+setwd("/Users/adrua/Desktop/R-Crawling_new/R-Crawling/")
 
 data <- read.csv("m3.csv")
 head(data)
@@ -116,7 +116,7 @@ final_data2 <- NULL
 for(i in 1:length(folder_list)){
   
   folder_list[i]
-  setwd(paste0("/Users/adrua/Desktop/R-Crawling/",folder_list[i]))
+  setwd(paste0("/Users/adrua/Desktop/R-Crawling_new/R-Crawling/",folder_list[i]))
   getwd()
   file_list <- list.files()
   
@@ -255,7 +255,7 @@ dim(final_data)
 head(final_data)
 tail(final_data)
 
-setwd("/Users/adrua/Desktop/Crawling_R")
+setwd("/Users/adrua/Desktop/R-Crawling_new/R-Crawling")
 write.csv(final_data, "base_data.csv", row.names=F)
 
-
+ 
