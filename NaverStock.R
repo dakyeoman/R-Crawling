@@ -24,3 +24,4 @@ ta2<-(ta[[1]])
 ta2[-c(1,7,8,9,15),]
 
 htmltab(url, encoding = "UTF-8")
+
