@@ -26,7 +26,7 @@ for(i in 1:10){
   dc_data <- rbind(dc_data, data)
   cat("\n", i)
 }
-
+url
 head(dc_data)
 dim(dc_data)
 setwd("/Users/adrua/Desktop/R-Crawling_new/R-Crawling/")
